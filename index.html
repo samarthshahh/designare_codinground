@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login / Sign Up Page</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #74ebd5, #9face6);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 1.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      width: 350px;
+      transition: all 0.4s ease;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4c8bf5;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #3367d6;
+    }
+
+    .toggle-link {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .toggle-link a {
+      color: #4c8bf5;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: -5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Login Form -->
+    <form id="loginForm" onsubmit="redirectToWelcome(event)">
+      <h2>Welcome User</h2>
+      <input type="email" placeholder="Email" required pattern="[^@\s]+@[^@\s]+\.[^@\s]+" />
+      <input type="password" placeholder="Password" required minlength="8" />
+      <button type="submit">Sign In</button>
+      <div class="toggle-link">
+        Not a user? <a onclick="toggleForms()">Sign Up</a>
+      </div>
+    </form>
+
+    <!-- Signup Form -->
+    <form id="signupForm" class="hidden" onsubmit="handleSignUp(event)">
+      <h2>Sign Up</h2>
+      <input type="text" id="signupName" placeholder="Full Name" required />
+      <input type="email" id="signupEmail" placeholder="Email" required pattern="[^@\s]+@[^@\s]+\.[^@\s]+" />
+      <input type="password" id="signupPassword" placeholder="Create Password" required 
+             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+             title="Must contain at least 8 characters, including UPPER/lowercase and numbers" />
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+      <div id="errorMsg" class="error"></div>
+      <button type="submit">Sign Up</button>
+      <div class="toggle-link">
+        Already a user? <a onclick="toggleForms()">Login</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function toggleForms() {
+      const login = document.getElementById('loginForm');
+      const signup = document.getElementById('signupForm');
+      login.classList.toggle('hidden');
+      signup.classList.toggle('hidden');
+      document.getElementById('errorMsg').textContent = '';
+    }
+
+    function handleSignUp(event) {
+      event.preventDefault();
+      const name = document.getElementById('signupName').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const password = document.getElementById('signupPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const errorMsg = document.getElementById('errorMsg');
+
+      // Password Match Check
+      if (password !== confirmPassword) {
+        errorMsg.textContent = "Passwords do not match!";
+        return;
+      }
+
+      // Save user name (you can store more if needed)
+      localStorage.setItem('username', name);
+
+      // Redirect
+      window.location.href = "welcome.html";
+    }
+
+    function redirectToWelcome(event) {
+      event.preventDefault();
+      if (!localStorage.getItem('username')) {
+        localStorage.setItem('username', 'User');
+      }
+      window.location.href = "welcome.html";
+    }
+  </script>
+</body>
+</html>

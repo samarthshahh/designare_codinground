@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome Page</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #74ebd5, #9face6);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      animation: fadeIn 1.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .welcome-box {
+      background-color: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      text-align: center;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    h1 {
+      color: #4c8bf5;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #555;
+      font-size: 18px;
+    }
+
+    .home-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4c8bf5;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .home-button:hover {
+      background-color: #3367d6;
+    }
+  </style>
+</head>
+<body>
+  <div class="welcome-box">
+    <h1 id="welcomeMsg">Welcome!</h1>
+    <p>You’ve successfully signed in.</p>
+    <button class="home-button" onclick="goHome()">Log Out</button>
+  </div>
+
+  <script>
+    const username = localStorage.getItem('username') || "User";
+    document.getElementById("welcomeMsg").innerText = `Welcome, ${username}!`;
+
+    function goHome() {
+      localStorage.removeItem('username'); // clear the name if you want
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
